@@ -20,18 +20,23 @@
 --
 
 DROP TABLE IF EXISTS `tbl_clientprogdetails`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
+
 CREATE TABLE `tbl_clientprogdetails` (
   `OrderID` int(11) NOT NULL,
   `ClientName` varchar(50) DEFAULT NULL,
-  `ClientNum` int(11) DEFAULT NULL,
+  `ClientID` int(11) DEFAULT NULL,       -- Changed from ClientNum
   `ClientContact` varchar(50) DEFAULT NULL,
-  `OrderLabel` varchar(50) DEFAULT NULL
+  `OrderLabel` varchar(50) DEFAULT NULL,
+  
+  -- Best Practice: Make OrderID the Primary Key so it links perfectly 
+  -- to tbl_GenDetails and prevents duplicate details for one order.
+  PRIMARY KEY (`OrderID`),
+  
+  -- Optional: Link it strictly to GenDetails
+  CONSTRAINT fk_client_order 
+  FOREIGN KEY (`OrderID`) REFERENCES `tbl_gendetails` (`OrderID`) 
+  ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Dumping data for table `tbl_clientprogdetails`
 --
 
@@ -51,7 +56,7 @@ CREATE TABLE `tbl_gendetails` (
   `OrderID` int(11) NOT NULL AUTO_INCREMENT,
   `ItemOrdered` varchar(50) DEFAULT NULL,
   `QtyOrdered` int(100) DEFAULT NULL,
-  `DatePurchased` date DEFAULT NULL,
+  `DatePurchased` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`OrderID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
