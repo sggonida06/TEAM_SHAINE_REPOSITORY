@@ -1,15 +1,15 @@
-const mysql = require('mysql2/promise');
+// db_commission_starter.js
 
-// Create the connection pool
+const mysql = require('mysql2/promise'); 
+
 const pool = mysql.createPool({
     host: 'localhost',
-    user: 'root',            
+    user: 'root',
     password: '',            
     database: 'db_commission', 
     waitForConnections: true,
-    connectionLimit: 10,     
+    connectionLimit: 10,
     queueLimit: 0
-});
+}); 
 
-module.exports = pool.promise();
-
+module.exports = pool;

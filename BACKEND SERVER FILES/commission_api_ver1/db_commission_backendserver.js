@@ -2,15 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const pool = require('./db_commission_starter');
 
-
-app.get('/', (req, res) => {
-  res.send('Hello from Express!');
-});
-
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
+
+app.get('/', (req, res) => {
+  res.send('Server now running. Greetings user!');
+});
 
 
 //Lance and shaine

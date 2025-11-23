@@ -27,12 +27,12 @@ async function apiCall(endpoint, method, body = null) {
         const data = await response.json();
         return data;
     } catch (err) {
-        console.error(`❌ Network Error on ${endpoint}:`, err.message);
+        console.error(`☒ Network Error on ${endpoint}:`, err.message);
     }
 }
 
 async function viewTracker() {
-    console.log("\n👀 [UI] Loading Project Tracker View...");
+    console.log("\n ⟳ [UI] Loading Project Tracker View...");
     const data = await apiCall('/view_projecttrackerlist', 'GET'); // Using your new route name
     console.table(data);
 }
@@ -41,9 +41,9 @@ async function viewTracker() {
  * Scenario: User clicks "Edit", changes details, and clicks "Save".
  */
 async function handleEditClick(orderId, newLabel, newContact) {
-    console.log(`\n🖱️ [USER CLICK] 'Edit' on Order ${orderId}`);
+    console.log(`\n╰┈➤ [USER CLICK] 'Edit' on Order ${orderId}`);
     
-    // 1. Fritzie's Logic
+    // 1.Logic
     SelectedOrderID = orderId;
     ActionType = ACTION_EDIT;
     AllowEdit = true; 
@@ -53,7 +53,7 @@ async function handleEditClick(orderId, newLabel, newContact) {
     await wait(500);
 
     // 2. Simulate User Typing
-    console.log(`   ✍️ [USER INPUT] User is typing: "${newLabel}"...`);
+    console.log(`   👇 [USER INPUT] User is typing: "${newLabel}"...`);
     
     // 3. API Call (Saving the data)
     const result = await apiCall('/orders/edit', 'PUT', {
@@ -61,7 +61,7 @@ async function handleEditClick(orderId, newLabel, newContact) {
         newOrderLabel: newLabel,
         newClientContact: newContact
     });
-    console.log(`   ✅ [SERVER RESPONSE] ${result.message}`);
+    console.log(`   ✔ [SERVER RESPONSE] ${result.message}`);
     
     // Reset State
     AllowEdit = false;
@@ -72,7 +72,7 @@ async function handleEditClick(orderId, newLabel, newContact) {
  * Scenario: User clicks "Cancel", sees popup, confirms "Yes".
  */
 async function handleCancelClick(orderId) {
-    console.log(`\n🖱️ [USER CLICK] 'Cancel' on Order ${orderId}`);
+    console.log(`\n╰┈➤ [USER CLICK] 'Cancel' on Order ${orderId}`);
 
     SelectedOrderID = orderId;
     ActionType = ACTION_CANCEL;
@@ -84,9 +84,9 @@ async function handleCancelClick(orderId) {
         console.log(`   👍 [USER CONFIRM] "Yes, cancel it."`);
         
         const result = await apiCall('/orders/cancel', 'POST', { orderId: orderId });
-        console.log(`   ✅ [SERVER RESPONSE] ${result.message}`);
+        console.log(`   ✔ [SERVER RESPONSE] ${result.message}`);
     } else {
-        console.log(`   🚫 [USER] Cancellation aborted.`);
+        console.log(`   ⊘ [USER] Cancellation aborted.`);
     }
 }
 
