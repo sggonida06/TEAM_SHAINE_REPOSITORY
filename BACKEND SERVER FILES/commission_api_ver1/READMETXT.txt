@@ -1,6 +1,6 @@
 TEAM SHAINE MEMBERS:
 
-- Jana LLera - QA
+- Jana LLera - Workflow manager, qa
 - Lance Mendoza - Database coder
 - Shaine Gonida - Database coder
 - Fritzie Jaspeo - api command coder 
@@ -14,6 +14,7 @@ PREREQUISITES:
 
 1. Must have installed xampp
 2. Must have installed node.js 
+3. Must have installed thunderclient vs extension.
 
 STEP 1
 
@@ -23,7 +24,7 @@ STEP 1
 
 3. Create a database called db_commission
 
-4. Go to import and choose the db_commission_base_file_withsampledata (pull if not in device). Import this into the db_commission database 
+4. Go to import and choose the db_commission_final file (pull if not in device). Import this into the db_commission database 
 
 5. Keep this tab on
 
@@ -42,4 +43,49 @@ STEP 2
 6. Open a new terminal (without closing the original terminal) and run: node db_commission_frontendsimulationserver.js
 
 7. Go to http://localhost:3000/api/tables/tbl_gendetails 
+
+
+
+THUNDERCLIENT
+
+1. After installing thunderclient, click on the thunder symbol in the left side of vs code
+
+2. For different functions, refer to the db_commission_backendserver file. 
+
+Example 1: 
+
+
+Code snippet from db_commission_backendserver:
+
+app.get('/api/tables/tbl_gendetails', async (req, res) => {
+
+What to input in thunderclient
+
+get - http://localhost:3000/api/tables/tbl_gendetails (shows general details table)
+
+
+Example 2: 
+
+
+Code snippet from db_commission_backendserver:
+
+app.post('/api/orders/cancel', async (req, res) => {
+
+What to input in thunderclient
+
+post - http://localhost:3000/api/orders/cancel
+
+NOTE: This function needs a data so if you are canceling OrderId : 12345,
+
+Input the following into the JSON Body (take note of the syntax): 
+
+{
+  "orderId": 12345
+}
+
+
+
+
+
+
  

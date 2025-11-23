@@ -78,7 +78,10 @@ app.get('/api/tables/tbl_progtrack', async (req, res) => {
 //fritzie
 
 app.post('/api/orders/cancel', async (req, res) => {
-    const { orderId } = req.body;
+    const { orderId } = req.body || {}; 
+    if (!orderId) {
+        return res.status(400).json({ error: "Missing orderId. Please provide a JSON body with orderId." });
+    }
     try {
         const query = "UPDATE tbl_progtrack SET ProjStat = 'Cancelled' WHERE OrderID = ?";
         const [result] = await pool.query(query, [orderId]);
@@ -96,7 +99,12 @@ app.post('/api/orders/cancel', async (req, res) => {
 });
 
 app.put('/api/orders/edit', async (req, res) => {
-    const { orderId, newOrderLabel, newClientContact } = req.body;
+   const { orderId, newOrderLabel, newClientContact } = req.body || {};
+
+    if (!orderId || !newOrderLabel || !newClientContact) {
+        return res.status(400).json({ error: "Missing data. Please provide orderId, newOrderLabel, and newClientContact." });
+    }
+
     try {
         const updateClient = "UPDATE tbl_clientprogdetails SET OrderLabel = ?, ClientContact = ? WHERE OrderID = ?";
         await pool.query(updateClient, [newOrderLabel, newClientContact, orderId]);
