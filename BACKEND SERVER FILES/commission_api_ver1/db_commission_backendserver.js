@@ -75,6 +75,8 @@ app.get('/api/tables/tbl_progtrack', async (req, res) => {
     }
 });
 
+//fritzie
+
 app.post('/api/orders/cancel', async (req, res) => {
     const { orderId } = req.body;
     try {
@@ -93,7 +95,6 @@ app.post('/api/orders/cancel', async (req, res) => {
     }
 });
 
-//fritzie
 app.put('/api/orders/edit', async (req, res) => {
     const { orderId, newOrderLabel, newClientContact } = req.body;
     try {
