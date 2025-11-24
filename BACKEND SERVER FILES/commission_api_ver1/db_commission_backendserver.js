@@ -99,18 +99,34 @@ app.post('/api/orders/cancel', async (req, res) => {
 });
 
 app.put('/api/orders/edit', async (req, res) => {
-   const { orderId, newOrderLabel, newClientContact } = req.body || {};
+    const { orderId, newOrderLabel, newClientContact, newProjStat } = req.body || {};
 
-    if (!orderId || !newOrderLabel || !newClientContact) {
-        return res.status(400).json({ error: "Missing data. Please provide orderId, newOrderLabel, and newClientContact." });
+    if (!orderId) {
+        return res.status(400).json({ error: "Missing orderId." });
     }
 
     try {
-        const updateClient = "UPDATE tbl_clientprogdetails SET OrderLabel = ?, ClientContact = ? WHERE OrderID = ?";
+        // Update tbl_clientprogdetails (order label + contact)
+        const updateClient = `
+            UPDATE tbl_clientprogdetails
+            SET OrderLabel = ?, ClientContact = ?
+            WHERE OrderID = ?
+        `;
         await pool.query(updateClient, [newOrderLabel, newClientContact, orderId]);
 
-        console.log(`✅ Order ${orderId} details modified.`);
-        res.json({ message: `Order ${orderId} details modified successfully.` });
+        // Update tbl_progtrack (project status)
+        if (newProjStat) {
+            const updateStatus = `
+                UPDATE tbl_progtrack
+                SET ProjStat = ?
+                WHERE OrderID = ?
+            `;
+            await pool.query(updateStatus, [newProjStat, orderId]);
+        }
+
+        console.log(`✅ Order ${orderId} details updated.`);
+        res.json({ message: `Order ${orderId} updated successfully.` });
+
     } catch (err) {
         console.error("Failed to modify order:", err);
         res.status(500).json({ error: "Internal Server Error" });

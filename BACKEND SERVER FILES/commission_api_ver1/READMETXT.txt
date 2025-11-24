@@ -42,7 +42,7 @@ STEP 2
 
 6. Open a new terminal (without closing the original terminal) and run: node db_commission_frontendsimulationserver.js
 
-7. Go to http://localhost:3000/api/tables/tbl_gendetails 
+7. Go to http://localhost:3000/api/tables/tbl_gendetails in the browser
 
 
 
