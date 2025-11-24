@@ -102,7 +102,7 @@ app.put('/api/orders/edit', async (req, res) => {
     const { orderId, newOrderLabel, newClientContact, newProjStat } = req.body || {};
 
     if (!orderId) {
-        return res.status(400).json({ error: "Missing orderId." });
+        return res.status(400).json({ error: "Missing orderId, newOrderLabel, newClientContact, newProjStat. Please input" });
     }
 
     try {
